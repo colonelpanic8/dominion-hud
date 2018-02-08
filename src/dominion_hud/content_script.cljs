@@ -4,4 +4,6 @@
             [dominion-hud.log-scraper :refer [get-log-lines]]))
 
 (runonce
- (log "AWESOME"))
+ (log "KATIVAKATIVAN HERE WE GO...!")
+ (js/setInterval #(log (apply vector (get-log-lines)) "hi") 3000))
+
