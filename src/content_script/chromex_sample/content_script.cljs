@@ -1,6 +1,6 @@
-(ns chromex-sample.content-script
+(ns dominion-hud.content-script
   (:require-macros [chromex.support :refer [runonce]])
-  (:require [chromex-sample.content-script.core :as core]))
+  (:require [dominion-hud.content-script.core :as core]))
 
 (runonce
   (core/init!))

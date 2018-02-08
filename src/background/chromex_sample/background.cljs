@@ -1,6 +1,6 @@
-(ns chromex-sample.background
+(ns dominion-hud.background
   (:require-macros [chromex.support :refer [runonce]])
-  (:require [chromex-sample.background.core :as core]))
+  (:require [dominion-hud.background.core :as core]))
 
 (runonce
   (core/init!))
