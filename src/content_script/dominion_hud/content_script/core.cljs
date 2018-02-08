@@ -8,7 +8,7 @@
 ; -- a message loop ---------------------------------------------------------------------------------------------------------
 
 (defn process-message! [message]
-  (log "CONTENT SCRIPT: got message:" message))
+  (log "CONTEN SCRIPT: got message:" message))
 
 (defn run-message-loop! [message-channel]
   (log "CONTENT SCRIPT: starting message loop...")
