@@ -5,7 +5,9 @@
                  [binaryage/chromex "0.5.15"]
                  [binaryage/devtools "0.9.8"]
                  [figwheel "0.5.14"]
-                 [environ "1.1.0"]]
+                 [environ "1.1.0"]
+                 [com.cemerick/piggieback "0.2.1"]
+                 [org.clojure/clojure "1.7.0"]]
 
   :plugins [[lein-cljsbuild "1.1.6"]
             [lein-figwheel "0.5.14"]
@@ -18,6 +20,8 @@
   :clean-targets ^{:protect false} ["target"
                                     "resources/unpacked/compiled"
                                     "resources/release/compiled"]
+
+  :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
 
   :cljsbuild {:builds {}}                                                                                                     ; prevent https://github.com/emezeske/lein-cljsbuild/issues/413
 
