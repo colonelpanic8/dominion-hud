@@ -13,7 +13,7 @@
             [lein-environ "1.1.0"]
             [lein-cooper "1.2.2"]]
 
-  :source-paths ["src/content_script"]
+  :source-paths ["src"]
 
   :clean-targets ^{:protect false} ["target"
                                     "resources/unpacked/compiled"
@@ -24,7 +24,7 @@
   :profiles {:unpacked
              {:cljsbuild {:builds
                           {:content-script
-                           {:source-paths ["src/content_script"]
+                           {:source-paths ["src"]
                             :compiler     {:output-to     "resources/unpacked/compiled/content-script/main.js"
                                            :output-dir    "resources/unpacked/compiled/content-script"
                                            :asset-path    "compiled/content-script"
