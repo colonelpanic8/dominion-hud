@@ -13,13 +13,16 @@
             [lein-environ "1.1.0"]
             [lein-cooper "1.2.2"]]
 
+  :test-paths ["tests/dominion-hud"]
+
   :source-paths ["src"]
 
   :clean-targets ^{:protect false} ["target"
                                     "resources/unpacked/compiled"
                                     "resources/release/compiled"]
 
-  :cljsbuild {:builds {}}                                                                                                     ; prevent https://github.com/emezeske/lein-cljsbuild/issues/413
+  ; prevent https://github.com/emezeske/lein-cljsbuild/issues/413
+  :cljsbuild {:builds {}}
 
   :profiles {:unpacked
              {:cljsbuild {:builds
@@ -29,10 +32,27 @@
                                            :output-dir    "resources/unpacked/compiled/content-script"
                                            :asset-path    "compiled/content-script"
                                            :main          dominion-hud.content-script
-                                           ;:optimizations :whitespace                                                        ; content scripts cannot do eval / load script dynamically
-                                           :optimizations :advanced                                                           ; let's use advanced build with pseudo-names for now, there seems to be a bug in deps ordering under :whitespace mode
+                                        ;:optimizations :whitespace ; content scripts cannot do eval / load script dynamically
+
+                                        ; let's use advanced build with
+                                        ; pseudo-names for now, there seems to
+                                        ; be a bug in deps ordering
+                                        ; under :whitespace mode
+                                           :optimizations :advanced
                                            :pseudo-names  true
                                            :pretty-print  true}}}}}
+             :test
+             {:cljsbuild {:builds
+                          {:test
+                           {:source-paths ["src" "tests"]
+                            :compiler {:output-to "resources/test/compiled.js"
+                                       :main dominion-hud.test
+                                       :optimizations :simple
+                                       :pretty-print true}}}}
+              :test-commands {"test" ["phantomjs"
+                                    ; Files will be crated later:
+                                    "resources/test/test.js"
+                                    "resources/test/test.html"]}}
              :checkouts
              ; DON'T FORGET TO UPDATE scripts/ensure-checkouts.sh
              {:cljsbuild {:builds
@@ -65,9 +85,10 @@
                                            :elide-asserts true}}}}}}
 
   :aliases {"dev-build"       ["with-profile" "+unpacked,+checkouts,+checkouts-content-script" "cljsbuild" "once"]
-            "content"         ["with-profile" "+unpacked" "cljsbuild" "auto" "content-script"]
+            "content"         ["with-profile" "+unpacked," "cljsbuild" "auto" "content-script"]
+            "build-tests"     ["with-profile" "+test," "cljsbuild" "auto"]
             "content-dev"     ["with-profile" "+unpacked,+checkouts-content-script" "cljsbuild" "auto"]
-            "devel"           ["with-profile" "+cooper" "do"                                                                  ; for mac only
+            "devel"           ["with-profile" "+cooper" "do" ; for mac only
                                ["shell" "scripts/ensure-checkouts.sh"]
                                ["cooper"]]
             "release"         ["with-profile" "+release" "do"

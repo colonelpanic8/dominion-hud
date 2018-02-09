@@ -10,3 +10,4 @@
 /.tmp
 .figwheel*.log
 .chrome-profile
+/resources/test/compiled.js
